@@ -70,6 +70,7 @@ public class ZigBeeChannelConverterFactory {
         channelMap.put(ZigBeeBindingConstants.CHANNEL_SWITCH_ONOFF, ZigBeeConverterSwitchOnoff.class);
         channelMap.put(ZigBeeBindingConstants.CHANNEL_SWITCH_LEVEL, ZigBeeConverterSwitchLevel.class);
         channelMap.put(ZigBeeBindingConstants.CHANNEL_TEMPERATURE_VALUE, ZigBeeConverterTemperature.class);
+        channelMap.put(ZigBeeBindingConstants.CHANNEL_MULTISTATE, ZigBeeConverterMultiStateInput.class);
 
         // Add the hierarchical list of channels that are to be removed due to inheritance
         // Note that order is important in the event that there are multiple removals...

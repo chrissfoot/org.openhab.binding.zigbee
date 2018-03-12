@@ -580,7 +580,7 @@ public class ZigBeeThingHandler extends BaseThingHandler
         ZigBeeEndpoint otaEndpoint = null;
         ZclOtaUpgradeCluster otaCluster = null;
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
-            otaServer = (ZigBeeOtaServer) endpoint.getExtension(ZclOtaUpgradeCluster.CLUSTER_ID);
+            // otaServer = (ZigBeeOtaServer) endpoint.getExtension(ZclOtaUpgradeCluster.CLUSTER_ID);
             if (otaServer != null) {
                 break;
             }
@@ -600,7 +600,7 @@ public class ZigBeeThingHandler extends BaseThingHandler
         // Register the OTA server if it's not already registered
         if (otaServer == null && otaEndpoint != null) {
             otaServer = new ZigBeeOtaServer();
-            otaEndpoint.addExtension(otaServer);
+            // otaEndpoint.addExtension(otaServer);
         } else {
             logger.debug("{}: Can't create OTA server", nodeIeeeAddress);
             return;

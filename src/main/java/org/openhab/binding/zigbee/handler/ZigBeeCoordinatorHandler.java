@@ -41,8 +41,6 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateSerializer;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieApp;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
@@ -496,12 +494,12 @@ public abstract class ZigBeeCoordinatorHandler extends BaseBridgeHandler
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
             if (endpoint.getInputCluster(ZclIasZoneCluster.CLUSTER_ID) != null) {
                 logger.debug("{}: Adding IAS CIE", node.getIeeeAddress());
-                endpoint.addExtension(new ZigBeeIasCieApp(coordinator.getIeeeAddress(), 0));
+                // endpoint.addExtension(new ZigBeeIasCieApp(coordinator.getIeeeAddress(), 0));
                 break;
             }
             if (endpoint.getInputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
                 logger.debug("{}: Adding OTA Server", node.getIeeeAddress());
-                endpoint.addExtension(new ZigBeeOtaServer());
+                // endpoint.addExtension(new ZigBeeOtaServer());
                 break;
             }
         }
