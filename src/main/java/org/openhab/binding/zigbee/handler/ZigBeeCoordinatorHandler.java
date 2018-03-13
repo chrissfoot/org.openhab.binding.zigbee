@@ -8,6 +8,7 @@
 package org.openhab.binding.zigbee.handler;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -606,8 +607,20 @@ public abstract class ZigBeeCoordinatorHandler extends BaseBridgeHandler
         if (node == null) {
             return Collections.<ZigBeeEndpoint> emptySet();
         }
+        Collection<ZigBeeEndpoint> endpoints = node.getEndpoints();
+        Collection<ZigBeeEndpoint> newEndpoints = new ArrayList<ZigBeeEndpoint>();
 
-        return node.getEndpoints();
+        for (ZigBeeEndpoint endpoint : endpoints) {
+            ArrayList<Integer> outputClusterIds = new ArrayList<Integer>(endpoint.getOutputClusterIds());
+            outputClusterIds.add(6);
+            endpoint.setOutputClusterIds(outputClusterIds);
+            ArrayList<Integer> inputClusterIds = new ArrayList<Integer>(endpoint.getInputClusterIds());
+            inputClusterIds.add(6);
+            endpoint.setInputClusterIds(inputClusterIds);
+            newEndpoints.add(endpoint);
+        }
+
+        return newEndpoints;
     }
 
     public Set<ZigBeeNode> getNodes() {

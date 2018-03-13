@@ -182,8 +182,8 @@ public class ZigBeeThingHandler extends BaseThingHandler
         for (ZigBeeEndpoint endpoint : coordinatorHandler.getNodeEndpoints(nodeIeeeAddress)) {
             logger.debug("{}: Checking endpoint {} channels", nodeIeeeAddress, endpoint.getEndpointId());
             nodeChannels.addAll(factory.getChannels(getThing().getUID(), endpoint));
-        }
 
+        }
         logger.debug("{}: Created {} channels", nodeIeeeAddress, nodeChannels.size());
         try {
             pollingPeriod = POLLING_PERIOD_MAX;
@@ -437,6 +437,11 @@ public class ZigBeeThingHandler extends BaseThingHandler
             }
         };
         scheduler.schedule(commandHandler, 0, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public void triggerChannel(ChannelUID channelUID) {
+        triggerChannel(channelUID);
     }
 
     /**

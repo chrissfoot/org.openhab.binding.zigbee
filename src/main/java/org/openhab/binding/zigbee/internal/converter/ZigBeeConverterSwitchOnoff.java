@@ -7,18 +7,14 @@
  */
 package org.openhab.binding.zigbee.internal.converter;
 
-import java.util.concurrent.ExecutionException;
-
 import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.library.types.PercentType;
 import org.eclipse.smarthome.core.thing.Channel;
 import org.eclipse.smarthome.core.thing.ThingUID;
 import org.eclipse.smarthome.core.types.Command;
-import org.openhab.binding.zigbee.ZigBeeBindingConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclAttributeListener;
@@ -45,57 +41,57 @@ public class ZigBeeConverterSwitchOnoff extends ZigBeeBaseChannelConverter
 
     @Override
     public boolean initializeConverter() {
-        if (endpoint.getParentNode().getNetworkAddress() == 60773) {
-            logger.debug("{}: Initialising device on/off cluster", endpoint.getIeeeAddress());
-        }
-        clusterOnOffClient = (ZclOnOffCluster) endpoint.getOutputCluster(ZclOnOffCluster.CLUSTER_ID);
-        clusterOnOffServer = (ZclOnOffCluster) endpoint.getInputCluster(ZclOnOffCluster.CLUSTER_ID);
-        if (clusterOnOffClient == null && clusterOnOffServer == null) {
-            logger.error("{}: Error opening device on/off controls", endpoint.getIeeeAddress());
-            return false;
-        }
-
-        if (clusterOnOffServer != null) {
-            try {
-                CommandResult bindResponse = clusterOnOffServer.bind().get();
-                if (bindResponse.isSuccess()) {
-                    // Configure reporting - no faster than once per second - no slower than 10 minutes.
-                    CommandResult reportingResponse = clusterOnOffServer.setOnOffReporting(1, REPORTING_PERIOD_DEFAULT_MAX)
-                            .get();
-                    if (reportingResponse.isError()) {
-                        pollingPeriod = POLLING_PERIOD_HIGH;
-                    }
-                } else {
-                    pollingPeriod = POLLING_PERIOD_HIGH;
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                logger.error("{}: Exception setting reporting ", endpoint.getIeeeAddress(), e);
-            }
-
-            // Add a listener, then request the status
-            clusterOnOffServer.addAttributeListener(this);
-        }
-
-        if (clusterOnOffClient != null) {
-            try {
-                CommandResult bindResponse = clusterOnOffClient.bind().get();
-                if (bindResponse.isSuccess()) {
-                    // Configure reporting - no faster than once per second - no slower than 10 minutes.
-                    CommandResult reportingResponse = clusterOnOffClient.setOnOffReporting(1, REPORTING_PERIOD_DEFAULT_MAX)
-                            .get();
-                    if (reportingResponse.isError()) {
-                        pollingPeriod = POLLING_PERIOD_HIGH;
-                    }
-                } else {
-                    pollingPeriod = POLLING_PERIOD_HIGH;
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                logger.error("{}: Exception setting reporting ", endpoint.getIeeeAddress(), e);
-            }
-
-            // Add the command listener
-            clusterOnOffClient.addCommandListener(this);
-        }
+        // if (endpoint.getParentNode().getNetworkAddress() == 60773) {
+        // logger.debug("{}: Initialising device on/off cluster", endpoint.getIeeeAddress());
+        // }
+        // clusterOnOffClient = (ZclOnOffCluster) endpoint.getOutputCluster(ZclOnOffCluster.CLUSTER_ID);
+        // clusterOnOffServer = (ZclOnOffCluster) endpoint.getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+        // if (clusterOnOffClient == null && clusterOnOffServer == null) {
+        // logger.error("{}: Error opening device on/off controls", endpoint.getIeeeAddress());
+        // return false;
+        // }
+        //
+        // if (clusterOnOffServer != null) {
+        // try {
+        // CommandResult bindResponse = clusterOnOffServer.bind().get();
+        // if (bindResponse.isSuccess()) {
+        // // Configure reporting - no faster than once per second - no slower than 10 minutes.
+        // CommandResult reportingResponse = clusterOnOffServer
+        // .setOnOffReporting(1, REPORTING_PERIOD_DEFAULT_MAX).get();
+        // if (reportingResponse.isError()) {
+        // pollingPeriod = POLLING_PERIOD_HIGH;
+        // }
+        // } else {
+        // pollingPeriod = POLLING_PERIOD_HIGH;
+        // }
+        // } catch (InterruptedException | ExecutionException e) {
+        // logger.error("{}: Exception setting reporting ", endpoint.getIeeeAddress(), e);
+        // }
+        //
+        // // Add a listener, then request the status
+        // clusterOnOffServer.addAttributeListener(this);
+        // }
+        //
+        // if (clusterOnOffClient != null) {
+        // try {
+        // CommandResult bindResponse = clusterOnOffClient.bind().get();
+        // if (bindResponse.isSuccess()) {
+        // // Configure reporting - no faster than once per second - no slower than 10 minutes.
+        // CommandResult reportingResponse = clusterOnOffClient
+        // .setOnOffReporting(1, REPORTING_PERIOD_DEFAULT_MAX).get();
+        // if (reportingResponse.isError()) {
+        // pollingPeriod = POLLING_PERIOD_HIGH;
+        // }
+        // } else {
+        // pollingPeriod = POLLING_PERIOD_HIGH;
+        // }
+        // } catch (InterruptedException | ExecutionException e) {
+        // logger.error("{}: Exception setting reporting ", endpoint.getIeeeAddress(), e);
+        // }
+        //
+        // // Add the command listener
+        // clusterOnOffClient.addCommandListener(this);
+        // }
 
         return true;
     }
@@ -148,8 +144,9 @@ public class ZigBeeConverterSwitchOnoff extends ZigBeeBaseChannelConverter
                 && endpoint.getOutputCluster(ZclOnOffCluster.CLUSTER_ID) == null) {
             return null;
         }
-        return createChannel(thingUID, endpoint, ZigBeeBindingConstants.CHANNEL_SWITCH_ONOFF,
-                ZigBeeBindingConstants.ITEM_TYPE_SWITCH, "Switch");
+        // return createChannel(thingUID, endpoint, ZigBeeBindingConstants.CHANNEL_SWITCH_ONOFF,
+        // ZigBeeBindingConstants.ITEM_TYPE_SWITCH, "Switch");
+        return null;
     }
 
     @Override
